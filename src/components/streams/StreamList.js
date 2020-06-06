@@ -3,12 +3,13 @@ import {connect} from 'react-redux';
 import {fetchStreams as fetchStreamsAction} from './../actions/actions';
 
 class StreamList extends React.Component {
-    renderList = () => {
-        const {streams} = this.props;
-
+    renderList = ({streams}) => {
         return Object.keys(streams).map((key) => {
             return (
                 <div className='item' key={key}>
+                    <div className="right floated content">
+                        <button className='ui button'>Edit</button>
+                    </div>
                     <i className='large forward middle aligned icon red'/>
                     <div className='content'>
                         <div className="header"><h4>{streams[key].title}</h4></div>
@@ -25,7 +26,7 @@ class StreamList extends React.Component {
 
     render() {
         return (
-            <div className='ui relaxed divided list container'>{this.renderList()}</div>
+            <div className='ui relaxed divided list container'>{this.renderList(this.props)}</div>
         );
     }
 }
