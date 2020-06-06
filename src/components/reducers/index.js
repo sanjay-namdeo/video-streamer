@@ -1,4 +1,4 @@
-import {SIGN_IN, SIGN_OUT} from "../actions/types";
+import {SIGN_IN, SIGN_OUT, STREAM_CREATE} from "../actions/types";
 import {combineReducers} from "redux";
 import {reducer as formReducer} from 'redux-form';
 
@@ -18,6 +18,15 @@ const authReducer = (state = INITIAL_STATE, action) => {
     }
 }
 
-const reducers = combineReducers({auth: authReducer, form: formReducer});
+const streamReducer = (state = {}, action) => {
+    switch (action.type) {
+        case STREAM_CREATE:
+            return {...state, [action.payload.id]: action.payload};
+        default:
+            return state;
+    }
+}
+
+const reducers = combineReducers({auth: authReducer, form: formReducer, streams: streamReducer});
 
 export default reducers;

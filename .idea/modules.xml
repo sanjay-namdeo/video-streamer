@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/streamer.iml" filepath="$PROJECT_DIR$/streamer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../streamer-backend/streamer-backend.iml" filepath="$PROJECT_DIR$/../streamer-backend/streamer-backend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/untitled/untitled.iml" filepath="$PROJECT_DIR$/untitled/untitled.iml" />
     </modules>
   </component>
 </project>

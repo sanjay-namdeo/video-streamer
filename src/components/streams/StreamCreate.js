@@ -1,5 +1,7 @@
 import * as React from 'react';
 import {Field, reduxForm} from 'redux-form';
+import {connect} from "react-redux";
+import {streamCreate as streamCreateAction} from '../actions/actions';
 
 class StreamCreate extends React.Component {
     // Render input text fields
@@ -7,7 +9,7 @@ class StreamCreate extends React.Component {
         const {label, input, meta} = props;
 
         return (
-            <div className={`field ${meta.touched&&meta.error ? 'error' : ''}`}>
+            <div className={`field ${meta.touched && meta.error ? 'error' : ''}`}>
                 <label>{label}</label>
                 <input {...input}/>
                 {this.renderErrorMessage(meta)}
@@ -18,7 +20,7 @@ class StreamCreate extends React.Component {
     // If user has touched the field and didn't enter a mandatory value
     renderErrorMessage = (meta) => {
         const {touched, error} = meta;
-        if(touched && error) {
+        if (touched && error) {
             return (
                 <div className='ui error message'>
                     <div className='header'>{error}</div>
@@ -28,7 +30,7 @@ class StreamCreate extends React.Component {
     }
 
     onSubmit = (formValues) => {
-        // TODO
+        this.props.streamCreateAction(formValues);
     }
 
     render() {
@@ -39,7 +41,7 @@ class StreamCreate extends React.Component {
                 <form onSubmit={handleSubmit(this.onSubmit)}>
                     <Field name='title' component={this.renderInputField} label='Title'/>
                     <Field name='description' component={this.renderInputField} label='Description'/>
-                    <button className={`ui ${!valid?'disabled':''} button submit primary`}>Submit</button>
+                    <button className={`ui ${!valid ? 'disabled' : ''} button submit primary`}>Submit</button>
                 </form>
             </div>
         );
@@ -58,4 +60,10 @@ const formValidator = (formValues) => {
     return errors;
 }
 
-export default reduxForm({form: 'streamCreate', validate: formValidator})(StreamCreate);
+const mapStateToProps = (state) => {
+    return {streams: state.streams};
+}
+
+const reduxConsolidatedForm = reduxForm({form: 'streamCreate', validate: formValidator})(StreamCreate);
+
+export default connect(mapStateToProps, {streamCreateAction})(reduxConsolidatedForm);
