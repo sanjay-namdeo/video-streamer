@@ -1,4 +1,4 @@
-import {SIGN_IN, SIGN_OUT, STREAM_CREATE} from "./types";
+import {SIGN_IN, SIGN_OUT, STREAM_CREATE, STREAM_EDIT, STREAM_DELETE, FETCH_STREAM, FETCH_STREAMS} from "./types";
 import stream from "../apis/stream";
 
 const signIn = (usedId) => {
@@ -18,11 +18,40 @@ const streamCreate = (formValues) => {
     return async function (dispatch) {
         const response = await stream.post('/streams', formValues);
 
-        dispatch({
-            type: STREAM_CREATE,
-            payload: response.data
-        });
+        dispatch({type: STREAM_CREATE, payload: response.data});
     }
 }
 
-export {signIn, signOut, streamCreate}
+const streamEdit = (formValues) => {
+    return async function (dispatch) {
+        const response = await stream.put('/streams', formValues);
+
+        dispatch({type: STREAM_EDIT, payload: response.data});
+    }
+}
+
+const streamDelete = (id) => {
+    return async function (dispatch) {
+        await stream.delete('/streams', id);
+
+        dispatch({type: STREAM_DELETE, payload: id})
+    }
+}
+
+const fetchStream = (id) => {
+    return async function (dispatch) {
+        const response = await stream.get(`/streams/${id}`);
+
+        dispatch({type: FETCH_STREAM, payload: response.data});
+    }
+}
+
+const fetchStreams = () => {
+    return async function (dispatch) {
+        const response = await stream.get('/streams');
+
+        dispatch({type: FETCH_STREAMS, payload: response.data})
+    }
+}
+
+export {signIn, signOut, streamCreate, streamEdit, streamDelete, fetchStream, fetchStreams}
